@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import csv
 import html
+import json
 import random
 import zipfile
 from collections import Counter, defaultdict
@@ -310,6 +311,24 @@ def write_species_summary(
             )
 
 
+def write_app_species_data(
+    species_frequency: Counter[str], checklist_count: int, output_path: Path
+) -> None:
+    """Export aggregate weights for the static, browser-only card generator."""
+    species = sorted(species_frequency.items(), key=lambda item: item[0].casefold())
+    if len(species) < CARD_BIRD_COUNT:
+        raise RuntimeError(f"Need at least {CARD_BIRD_COUNT} eligible species.")
+    payload = {
+        "checklistCount": checklist_count,
+        "species": [[name, count] for name, count in species],
+    }
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    output_path.write_text(
+        "window.BIRDING_BINGO_DATA = " + json.dumps(payload, ensure_ascii=False) + ";\n",
+        encoding="utf-8",
+    )
+
+
 def write_synthetic_observations(output_path: Path) -> None:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     with output_path.open("w", encoding="utf-8", newline="") as sample_file:
@@ -384,6 +403,9 @@ def main() -> None:
     args.output_dir.mkdir(parents=True, exist_ok=True)
     summary_path = args.output_dir / "montrose-october-species-summary.csv"
     write_species_summary(species_frequency, checklist_count, summary_path)
+    write_app_species_data(
+        species_frequency, checklist_count, args.output_dir / "birds.js"
+    )
     write_synthetic_observations(
         args.output_dir / "synthetic-observation-sample.csv"
     )

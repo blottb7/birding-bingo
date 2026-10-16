@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#173c32">
+  <meta name="description" content="Play a birding bingo card for Montrose Point, Chicago, drawn from historical eBird checklist frequencies.">
+  <title>Birding Bingo · Montrose Point</title>
+  <style>
+    :root { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: #173c32; background: #f7f6ef; }
+    * { box-sizing: border-box; }
+    body { margin: 0; }
+    .wrap { max-width: 850px; margin: auto; padding: clamp(1rem, 4vw, 2.5rem); }
+    header { border-bottom: 1px solid #bfd0c2; padding-bottom: 1rem; }
+    .eyebrow { color: #587364; font-size: .82rem; font-weight: 750; letter-spacing: .12em; text-transform: uppercase; }
+    h1 { font-size: clamp(2rem, 7vw, 3.5rem); line-height: 1; letter-spacing: -.04em; margin: .45rem 0 .7rem; }
+    .subtitle { margin: 0; color: #4a6255; line-height: 1.5; }
+    .toolbar { display: flex; align-items: center; justify-content: space-between; gap: .75rem; flex-wrap: wrap; margin: 1.5rem 0 1rem; }
+    .status { font-weight: 700; margin: 0; min-height: 1.5em; }
+    .actions { display: flex; gap: .55rem; }
+    .action { border: 1px solid #2e5947; border-radius: .6rem; background: transparent; color: #173c32; font: inherit; font-weight: 700; padding: .65rem .9rem; cursor: pointer; }
+    .action:hover, .action:focus-visible { background: #e6eee5; }
+    .action.primary { background: #214f3d; color: white; }
+    .action.primary:hover, .action.primary:focus-visible { background: #123e2d; }
+    .card { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: clamp(3px, 1vw, 8px); }
+    .cell { width: 100%; min-width: 0; aspect-ratio: 1; border: 2px solid #9ab6a4; border-radius: .7rem; background: #edf3e9; color: #173c32; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .4rem; padding: .3rem; text-align: center; overflow-wrap: anywhere; }
+    button.cell { font: inherit; cursor: pointer; touch-action: manipulation; }
+    button.cell:hover, button.cell:focus-visible { border-color: #1d6147; outline: 2px solid #1d6147; outline-offset: 1px; }
+    .cell strong { font-size: clamp(.62rem, 2.5vw, 1rem); line-height: 1.18; }
+    .cell small { font-size: clamp(.5rem, 1.75vw, .73rem); line-height: 1.15; color: #4b6655; }
+    .cell.marked { background: #cce9cf; border-color: #438655; }
+    .cell.bingo { background: #f7dc83; border-color: #a57414; }
+    .cell.free { background: #d8e7da; font-weight: 800; letter-spacing: .03em; }
+    .cell.free.bingo { background: #f7dc83; }
+    .help { color: #4a6255; font-size: .9rem; margin: .8rem 0 0; }
+    .info { border-top: 1px solid #bfd0c2; margin-top: 2rem; padding-top: 1rem; color: #405a4b; font-size: .9rem; line-height: 1.55; }
+    .info p { margin: .6rem 0; }
+    a { color: #13583c; text-underline-offset: .16em; }
+    @media (max-width: 420px) {
+      .wrap { padding: .75rem; }
+      .cell { border-radius: .4rem; gap: .16rem; border-width: 1px; padding: .12rem; }
+      .cell strong { font-size: clamp(.58rem, 2.65vw, .72rem); }
+      .cell small { font-size: .48rem; }
+      .action { padding: .55rem .7rem; font-size: .88rem; }
+    }
+    @media print {
+      :root { background: white; }
+      .wrap { max-width: none; }
+      .actions, .help { display: none; }
+      .cell { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+  <script src="birds.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="wrap">
+    <header>
+      <div class="eyebrow">Montrose Point · Chicago</div>
+      <h1>Birding Bingo</h1>
+      <p class="subtitle">Look for birds, mark the ones you spot, and complete five in a row.</p>
+    </header>
+    <div class="toolbar">
+      <p class="status" id="status" role="status" aria-live="polite">Loading your card…</p>
+      <div class="actions">
+        <button class="action" id="reset" type="button">Reset marks</button>
+        <button class="action primary" id="new-card" type="button">New card</button>
+      </div>
+    </div>
+    <div class="card" id="card" aria-label="Birding Bingo card"></div>
+    <p class="help">Tap a bird to mark or unmark it. The center space is always free. Your card saves in this browser.</p>
+    <section class="info" aria-label="About the bird data">
+      <p>Each card draws 24 different birds with probability proportional to their historical checklist reporting frequency, without replacement. The sample covers complete checklists at eBird hotspot L161180 from October 3–17 across the available years. Percentages are historical frequencies, not a prediction of what you will see.</p>
+      <p>Source: eBird Basic Dataset, version EBD_relAug-2022 (2012–September 2022). <a href="recommended_citation.txt">Recommended citation</a> · <a href="terms_of_use.txt">eBird terms of use</a>. This is an educational, noncommercial derived product and is not endorsed by the Cornell Lab of Ornithology.</p>
+    </section>
+  </main>
+</body>
+</html>
