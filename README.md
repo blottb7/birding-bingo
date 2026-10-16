@@ -16,6 +16,13 @@ To publish, serve the contents of `outputs/` as a static site, with
 the page. Do not include `data/raw/` in the published site. Review the eBird
 terms before publishing, particularly the noncommercial-use restriction.
 
+For this public GitHub repository, `.github/workflows/pages.yml` publishes
+only those five site files to GitHub Pages after a push to `main`. In the
+repository's **Settings → Pages**, set **Build and deployment → Source** to
+**GitHub Actions**. The public app URL will be
+`https://blottb7.github.io/birding-bingo/`; add that URL to the portfolio
+once the deployment succeeds.
+
 ## Generate the card
 
 Keep the original eBird ZIP in `data/raw/`, then run:
