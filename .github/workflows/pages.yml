@@ -7,6 +7,7 @@ on:
       - "outputs/index.html"
       - "outputs/app.js"
       - "outputs/birds.js"
+      - "outputs/seasonal-data.js"
       - "outputs/terms_of_use.txt"
       - "outputs/recommended_citation.txt"
       - ".github/workflows/pages.yml"
@@ -33,7 +34,7 @@ jobs:
       - name: Prepare static site
         run: |
           mkdir site
-          cp outputs/index.html outputs/app.js outputs/birds.js outputs/terms_of_use.txt outputs/recommended_citation.txt site/
+          cp outputs/index.html outputs/app.js outputs/birds.js outputs/seasonal-data.js outputs/terms_of_use.txt outputs/recommended_citation.txt site/
       - uses: actions/upload-pages-artifact@v3
         with:
           path: site
